@@ -6,7 +6,7 @@
       </section>
       <section id="box">    
         <router-link v-for="(item, index) in movieList" :key="index" to="/movie" class="wraper">
-          <img :src="item.cover.url" alt="fh">
+          <img :src="item.cover.url" alt="fh" class="img"/>
           <section>
             <p>{{item.title}}</p>
             <p> 
@@ -15,7 +15,7 @@
               <span class="nostart"></span>
               <span class="nostart"></span>
               <span class="nostart"></span>                        
-               {{item.rating.value}}
+              <strong>{{item.rating.value}}</strong>
             </p>
           </section>
         </router-link>   
@@ -45,18 +45,29 @@ export default {
     this.movieName = this.movieInfo.subject_collection.name
     this.movieList = this.movieInfo.subject_collection_items
   },
-  filter: {
-    start (value) {
+  methods: {
+    getStart (value) {
+      let start = this.startNumber(value)
+      let nodeEle = ''
+      for (let i = 0; i < start; i++) {
+        nodeEle += '<span class="start"></span>'
+      }
+      for (let j = 0; j < (5 - start); j++) {
+        nodeEle += '<span class="nostart"></span>'
+      }
+      return nodeEle
+    },
+    startNumber (value) {
       switch (true) {
-        case value > 1 && value < 3:
+        case value > 1 && value <= 3:
           return 1
-        case value > 3 && value < 5:
+        case value > 3 && value <= 5:
           return 2
-        case value > 5 && value < 7:
+        case value > 5 && value <= 7:
           return 3
         case value > 7 && value < 9:
           return 4
-        case value > 9:
+        case value >= 9:
           return 5
       }
     }
@@ -96,10 +107,9 @@ export default {
           margin-right: .3rem;
         }
 
-        img {
+        .img {
           display: inline-block;
           width: 100%;
-          // padding-top: 120%;
         }
 
         section {
@@ -116,9 +126,16 @@ export default {
           p:nth-last-of-type(1) {
             color: #aaa;
             font-size: .1rem;
+
+            strong {
+              position: relative;
+              top: .02rem;
+              left: .02rem;
+            }
           }
         }  
-        .start,.nostart {
+        .start,
+        .nostart {
           vertical-align: middle;
           display: inline-block;
           width: .22rem;

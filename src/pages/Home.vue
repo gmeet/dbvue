@@ -21,12 +21,12 @@ export default {
   },
   methods: {
     getAjax () {
-      this.$jsonp('https://api.douban.com/v2/movie/search?q=生化危机')
-      .then((res) => {
-        console.log(res)
-      }).catch((err) => {
-        console.log(err)
-      })
+      // this.$jsonp('https://api.douban.com/v2/movie/search?q=生化危机')
+      // .then((res) => {
+      //   console.log(res)
+      // }).catch((err) => {
+      //   console.log(err)
+      // })
     }
   },
   components: {

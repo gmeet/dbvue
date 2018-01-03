@@ -4,9 +4,7 @@
       <MainContain  v-if="hotMovies" :typeTitle="types[0]" :movieInfo="hotMovies"></MainContain>
       <MainContain  v-if="freeMovies" :typeTitle="types[1]" :movieInfo="freeMovies"></MainContain>
       <MainContain  v-if="newMovies" :typeTitle="types[2]" :movieInfo="newMovies"></MainContain>
-      <FindMovie 
-        :infos="moviesName"  
-       >
+      <FindMovie :infos="moviesName">
         <h2>发现好电影</h2>  
       </FindMovie>            
       <MovieClassify />
@@ -29,6 +27,7 @@ export default {
       hotMovies: null,
       freeMovies: null,
       newMovies: null,
+      searchShow: 'none',
       moviesName: [{
         id: 1,
         url: '/',

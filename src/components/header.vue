@@ -1,17 +1,22 @@
 <template>
-    <section id="douban">
-        <router-link to="/"> <img class="logo" src="../assets/images/logo.png" alt="logo"></router-link>
-        <nav>
-            <router-link v-for="item in headerJSON" :key="item.id" :to="item.url" tag="a" :style="{color:item.color}">{{item.title}}</router-link>
-            <router-link to="/search" tag="span"><img src="../assets/images/search.png" alt="search"/></router-link>
-        </nav>
+  <section id="header">
+    <Search :style="{'display':searchShow}" @endSearch="startSearch"/>     
+    <section id="douban"> 
+      <router-link to="/"> <img class="logo" src="../assets/images/logo.png" alt="logo"></router-link>
+      <nav>
+          <router-link v-for="item in headerJSON" :key="item.id" :to="item.url" tag="a" :style="{color:item.color}">{{item.title}}</router-link>
+          <span @click="startSearch"><img src="../assets/images/search.png" alt="search"/></span>
+      </nav>
     </section>
+  </section>
 </template>
 <script>
+import Search from '@/components/search'
+
 export default {
   data () {
     return {
-      logo: require('../assets/images/logo.png'),
+      searchShow: 'none',
       headerJSON: {
         movies: {
           id: 1,
@@ -39,6 +44,21 @@ export default {
         }
       }
     }
+  },
+  methods: {
+    startSearch () {
+      let ele = document.getElementsByTagName('body')[0]
+      if (this.searchShow === 'none') {
+        ele.style.overflow = 'hidden'
+        this.searchShow = 'block'
+      } else {
+        ele.style.overflow = 'auto'
+        this.searchShow = 'none'
+      }
+    }
+  },
+  components: {
+    Search
   }
 }
 </script>

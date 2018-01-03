@@ -5,24 +5,19 @@
           <router-link to="/more">更多</router-link>
       </section>
       <section id="box">    
-        <router-link v-for="(item, index) in movieList" :key="index" to="/movie" class="wraper">
-          <img :src="item.cover.url" alt="fh" class="img"/>
+        <router-link v-for="(item, index) in movieList" :key="index" :to="`/movieDetail/${item.id}`" class="wraper">
+        <section class="img" :style="{'background-image': `url(${item.cover.url}`}"></section>
           <section>
             <p>{{item.title}}</p>
-            <p> 
-              <span class="nostart"></span>
-              <span class="nostart"></span>
-              <span class="nostart"></span>
-              <span class="nostart"></span>
-              <span class="nostart"></span>                        
-              <strong>{{item.rating.value}}</strong>
-            </p>
+            <MainStart v-if="item.rating.value" :score="item.rating.value" />
           </section>
         </router-link>   
       </section>       
     </section>
 </template>
 <script>
+import MainStart from '../components/start.vue'
+
 export default {
   props: {
     typeTitle: {
@@ -48,12 +43,12 @@ export default {
   methods: {
     getStart (value) {
       let start = this.startNumber(value)
-      let nodeEle = ''
+      let nodeEle = []
       for (let i = 0; i < start; i++) {
-        nodeEle += '<span class="start"></span>'
+        nodeEle.push('start')
       }
       for (let j = 0; j < (5 - start); j++) {
-        nodeEle += '<span class="nostart"></span>'
+        nodeEle.push('nostart')
       }
       return nodeEle
     },
@@ -71,6 +66,9 @@ export default {
           return 5
       }
     }
+  },
+  components: {
+    MainStart
   }
 }
 </script>
@@ -110,6 +108,14 @@ export default {
         .img {
           display: inline-block;
           width: 100%;
+          background-size: 100%;
+
+
+          &::after {
+            content: '';
+            display: block;
+            padding-top: 140%;
+          }
         }
 
         section {
@@ -126,26 +132,7 @@ export default {
           p:nth-last-of-type(1) {
             color: #aaa;
             font-size: .1rem;
-
-            strong {
-              position: relative;
-              top: .02rem;
-              left: .02rem;
-            }
           }
-        }  
-        .start,
-        .nostart {
-          vertical-align: middle;
-          display: inline-block;
-          width: .22rem;
-          height: .22rem;
-          background: url(../assets/images/fillStart.png) no-repeat;
-          background-size: 100% 100%;
-        }   
-        .nostart {
-          background: url(../assets/images/noStart.png) no-repeat;
-          background-size: 100% 100%;
         }   
       }
   }
